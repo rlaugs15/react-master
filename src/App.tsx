@@ -1,9 +1,8 @@
 import Router from "./Router";
-import React, { useState } from "react";
-import { createGlobalStyle } from "styled-components";
-import { ReactQueryDevtools } from "react-query/devtools";
-import { ThemeProvider } from "styled-components";
-import { lightTheme, darkTheme } from "./themes/theme";
+import { createGlobalStyle, ThemeProvider } from "styled-components";
+import DarkModeBtn from "./themes/DarkModeBtn";
+import { useRecoilValue } from "recoil";
+import { darkState, theme } from "./themes/theme";
 
 //전역적인 스타일을 다룬다.
 const GlobalStyle = createGlobalStyle`
@@ -60,28 +59,29 @@ table {
 }
 body {
   font-family: 'Source Sans Pro', sans-serif;
-  background-color: ${(props) => props.theme.bgColor};
-  color: ${(props) => props.theme.textColor};
+  //배경색, 글자색 프롭스 제거됨
+  color: ${(props) => props.theme.white.darker};
+  background-color: black;
 }
 a {
   text-decoration:none;
   color: inherit;
 }
+::-webkit-scrollbar { //스크롤바 없애기
+display: none
+}
 `;
 
 function App() {
-  const [isDarkMode, setIsDarkMode] = useState(false);
-  const toggleDarkMode = () => {
-    setIsDarkMode((prev) => !prev);
-  };
+  const isDark = useRecoilValue(darkState);
   return (
     <>
       {/*ThemeProvider 안에 있는 모든 것이 theme로 접근할 수 있다는 것을 의미
     스타일 컴포넌트로부터 오는 컴포넌트(props입력 필요)*/}
-      <ThemeProvider theme={isDarkMode ? darkTheme : lightTheme}>
+      <ThemeProvider theme={theme}>
+        {/* <DarkModeBtn /> */}
         <GlobalStyle />
-        <Router isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} />
-        <ReactQueryDevtools initialIsOpen={true} />
+        <Router />
       </ThemeProvider>
     </>
   );

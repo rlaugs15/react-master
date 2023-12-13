@@ -1,15 +1,20 @@
 import { DefaultTheme } from "styled-components";
+import { atom } from "recoil";
 
-export const lightTheme: DefaultTheme = {
-  bgColor: "#00E5FF",
-  textColor: "black",
-  accentColor: "#FF6F00",
-  divColor: "lavender",
+export const theme: DefaultTheme = {
+  red: "#E51013",
+  black: {
+    veryDark: "#141414",
+    darker: "#181818",
+    lighter: "#4e4e4e",
+  },
+  white: {
+    lighter: "#fff",
+    darker: "#e5e5e5",
+  },
 };
 
-export const darkTheme: DefaultTheme = {
-  bgColor: "#353b48",
-  textColor: "#f5f6fa",
-  accentColor: "#44bd32",
-  divColor: "black",
-};
+export const darkState = atom({
+  key: "isDark",
+  default: false,
+});

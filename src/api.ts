@@ -1,26 +1,54 @@
-export function fetchCoins() {
-  return fetch("https://api.coinpaprika.com/v1/coins").then((response) =>
-    response.json()
-  );
+const API_KEY = process.env.REACT_APP_API_KEY;
+const BASE_PATH = "https://api.themoviedb.org/3";
+
+export interface IVideo {
+  adult: boolean;
+  backdrop_path: string;
+  genre_ids: number[];
+  id: number;
+  original_language: string;
+  original_title: string;
+  overview: string;
+  popularity: number;
+  poster_path: string;
+  release_date: string;
+  title: string;
+  video: boolean;
+  vote_average: number;
+  vote_count: number;
+  first_air_date: string;
+  name: string;
 }
 
-export function fetchCoinInfo(coinId: String) {
-  return fetch(`https://api.coinpaprika.com/v1/coins/${coinId}`).then((res) =>
-    res.json()
-  );
+export interface IGetVideos {
+  page: number;
+  results: IVideo[];
+  total_pages: number;
+  total_results: number;
 }
 
-export function fetchCoinTickers(coinId: String) {
-  return fetch(`https://api.coinpaprika.com/v1/tickers/${coinId}`).then((res) =>
-    res.json()
-  );
+export async function getMovies() {
+  return await fetch(
+    `${BASE_PATH}/movie/now_playing?language=ko&page=1&api_key=${API_KEY}`
+  ).then((response) => response.json());
 }
 
-export function fetchCoinHistory(coinId: String) {
-  //const endDate = Math.floor(Date.now() / 1000);
-  //const startDate = endDate - 60 * 60 * 24 * 7;
-  return fetch(
-    `https://ohlcv-api.nomadcoders.workers.dev?coinId=${coinId}`
-    //`https://api.coinpaprika.com/v1/coins/${coinId}/ohlcv/historical?start=${startDate}`
-  ).then((res) => res.json());
+export async function getSmilar(id: number, releaseDate?: string) {
+  return await fetch(
+    `${BASE_PATH}/${
+      releaseDate ? "movie" : "tv"
+    }/${id}/similar?language=ko&page=1&api_key=${API_KEY}`
+  ).then((response) => response.json());
 }
+
+export async function getTVOntheAir() {
+  return await fetch(
+    `${BASE_PATH}/tv/on_the_air?language=ko&page=1&api_key=${API_KEY}`
+  ).then((response) => response.json());
+}
+
+/* export async function getTVSmilar(id: number) {
+  return await fetch(
+    `${BASE_PATH}/tv/${id}/similar?language=ko&page=1&api_key=${API_KEY}`
+  ).then((response) => response.json());
+} */
