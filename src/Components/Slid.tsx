@@ -182,14 +182,13 @@ function Slid({ movies, title }: ISlid) {
     } = movie;
     history.push(`/movie/${id}`, {
       id,
-      photo: backdrop_path,
+      photo: backdrop_path || poster_path,
       title,
       overview,
       releaseDate: release_date,
       adult,
       name,
       firstAirData: first_air_date,
-      tvPhoto: poster_path,
     });
   };
   return (

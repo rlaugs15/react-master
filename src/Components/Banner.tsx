@@ -42,7 +42,7 @@ const BannerCard = styled(motion.div)<{ bgPhoto: string }>`
   height: 90%;
   display: flex;
   flex-direction: column-reverse;
-  justify-content: space-between;
+  justify-content: center;
   align-items: flex-start;
   padding: 50px;
   background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 1)),

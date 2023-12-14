@@ -4,7 +4,6 @@ import { useHistory, useLocation } from "react-router-dom";
 import { styled } from "styled-components";
 import { getSmilar, IGetVideos, IVideo } from "../api";
 import { makeImagePath } from "../utils";
-import { useEffect, useState } from "react";
 
 const Wrapper = styled(motion.div)`
   max-width: 900px;
@@ -138,7 +137,6 @@ export interface IState {
   adult: boolean;
   name: string; //여기부터 tv시리즈
   firstAirData?: string;
-  tvPhoto?: string;
 }
 
 function DetailedCard({ movieId }: DetailedCardProps) {
@@ -165,14 +163,13 @@ function DetailedCard({ movieId }: DetailedCardProps) {
     } = video;
     history.push(`/movie/${id}`, {
       id,
-      photo: backdrop_path,
+      photo: backdrop_path || poster_path,
       title,
       overview,
       releaseDate: release_date,
       adult,
       name,
       firstAirData: first_air_date,
-      tvPhoto: poster_path,
     });
   };
   return (

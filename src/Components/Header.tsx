@@ -146,10 +146,11 @@ function Header() {
     setSearchOpen((prev) => !prev);
   };
 
-  const { register, handleSubmit } = useForm<IForm>();
+  const { register, handleSubmit, setValue } = useForm<IForm>();
   const history = useHistory();
   const onSearch = (data: IForm) => {
     history.push(`/search?keyword=${data.keyword}`);
+    setValue("keyword", "");
   };
   return (
     <Nav variants={navVariants} initial="top" animate={navAnimation}>
